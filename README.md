@@ -207,7 +207,19 @@ Se não estiver ativado, execute:
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-**Opção B - Via script de desenvolvimento:**
+**Opção B - Via Makefile:**
+```powershell
+make dev
+```
+
+Você pode customizar host e porta assim:
+
+```powershell
+make dev HOST=127.0.0.1 PORT=8000
+```
+
+Se preferir o script Bash, ele continua disponível:
+
 ```bash
 bash run-dev.sh
 ```
@@ -316,7 +328,7 @@ Veja o arquivo `request.http` para mais exemplos que podem ser executados no VS 
 
 ## 🔧 Variáveis de Ambiente
 
-Create a `.env` file na raiz do projeto:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```env
 APP_HOST=0.0.0.0
