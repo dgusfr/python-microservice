@@ -16,9 +16,11 @@ async def checkout_process(
     inventory_client: InventoryClient = Depends(get_inventory_client),
     order_client: OrderClient = Depends(get_order_client),
 ):
+    total_amount = float(sum(item.price for item in checkout_request.items))
+
     checkout = Checkout(
         customer_email=checkout_request.customer_email,
-        total_amount=sum(item.price for item in checkout_request.items),
+        total_amount=total_amount,
         status=CheckoutStatus.PENDING.value,
     )
     db.add(checkout)
@@ -26,7 +28,7 @@ async def checkout_process(
     await db.refresh(checkout)
 
     payment_response = await payment_client.process(
-        total_amount=checkout.total_amount,
+        total_amount=total_amount,
         payment_method=checkout_request.payment_method,
         customer_email=checkout_request.customer_email,
     )
