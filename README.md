@@ -106,6 +106,7 @@ Antes de começar, certifique-se de ter instalado:
 - **Python 3.13+**
 - **UV** (gerenciador de pacotes) - [Instalação](https://github.com/astral-sh/uv)
 - **Docker & Docker Compose**
+- **GNU Make** (para usar o `Makefile`)
 - **PowerShell** (Windows) ou terminal **Unix** (Linux/macOS)
 
 ### 1️⃣ Configuração do UV
@@ -211,6 +212,8 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```powershell
 make dev
 ```
+
+> Observação: o `Makefile` exige GNU Make instalado no sistema. No Windows, use Git Bash, WSL ou instale uma distribuição de `make`.
 
 Você pode customizar host e porta assim:
 
