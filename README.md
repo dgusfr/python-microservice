@@ -53,88 +53,124 @@ python-microservice/
 └── request.http                   # Exemplos de requisições HTTP
 ```
 
-## 🚀 Iniciando o Projeto
+## 🚀 Executando Localmente
 
 ### Pré-requisitos
 
-- Python 3.13+
-- UV (gerenciador de pacotes)
-- Docker & Docker Compose
-- PowerShell ou terminal Unix
+Antes de começar, certifique-se de ter instalado:
 
-### Instalação e Execução
+- **Python 3.13+**
+- **UV** (gerenciador de pacotes) - [Instalação](https://github.com/astral-sh/uv)
+- **Docker & Docker Compose**
+- **PowerShell** (Windows) ou terminal **Unix** (Linux/macOS)
 
-#### 1️⃣ Clonar/Navegar até o Repositório
+### 1️⃣ Configuração do UV
+
+#### Passo 1: Navegar até o projeto
 
 ```powershell
 cd C:\Projetos\python-microservice
 ```
 
-#### 2️⃣ Criar Ambiente Virtual com UV
+#### Passo 2: Criar ambiente virtual
 
 ```powershell
 uv venv
 ```
 
-Isso criará um diretório `.venv` com o ambiente isolado.
+Isso criará um diretório `.venv` com o ambiente Python isolado.
 
-#### 3️⃣ Ativar o Ambiente Virtual
+#### Passo 3: Ativar o ambiente virtual
 
-**PowerShell:**
+**PowerShell (Windows):**
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-**Git Bash / Unix:**
+**Bash/Git Bash (Windows/Linux/macOS):**
 ```bash
 source .venv/bin/activate
 ```
 
-> **Dica**: Se receber erro de permissão no PowerShell, execute:
+> ⚠️ **Erro de permissão no PowerShell?**
+> Execute este comando uma única vez:
 > ```powershell
 > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 > ```
 
-#### 4️⃣ Instalar Dependências
+#### Passo 4: Instalar dependências
 
 ```powershell
 uv sync
 ```
 
-Isso instalará todas as dependências definidas no `uv.lock` de forma determinística.
+Isso instalará todas as dependências definidas no `uv.lock` de forma determinística e reproduzível.
 
-#### 5️⃣ Iniciar Serviços de Infraestrutura
+### 2️⃣ Configuração do Docker
+
+#### Passo 1: Iniciar os serviços de infraestrutura
 
 ```powershell
 docker-compose up -d
 ```
 
-Isso iniciará:
-- **PostgreSQL** (porta 5442)
-- **Payment Service Mock** (porta 8081)
-- **Inventory Service Mock** (porta 8082)
-- **Order Service Mock** (porta 8083)
+Isso iniciará os seguintes containers em background:
 
-Aguarde alguns segundos para os containers ficarem saudáveis:
+| Serviço | Porta | Descrição |
+|---------|-------|-----------|
+| **PostgreSQL** | `5442` | Banco de dados |
+| **Payment Mock** | `8081` | Serviço de pagamento (WireMock) |
+| **Inventory Mock** | `8082` | Serviço de inventário (WireMock) |
+| **Order Mock** | `8083` | Serviço de pedidos (WireMock) |
+
+#### Passo 2: Verificar status dos containers
+
 ```powershell
 docker-compose ps
 ```
 
-#### 6️⃣ Executar a Aplicação
+Aguarde alguns segundos até que todos os containers estejam com status `Up` e saudáveis.
 
-**Opção 1 - Via uvicorn direto:**
+#### Passo 3: Visualizar logs (opcional)
+
+```powershell
+# Ver logs de todos os serviços
+docker-compose logs -f
+
+# Ver logs de um serviço específico
+docker-compose logs -f postgres
+docker-compose logs -f payment
+```
+
+### 3️⃣ Subindo o Servidor da Aplicação
+
+#### Passo 1: Garantir que o ambiente UV está ativo
+
+Você deve ver `(.venv)` no prompt do PowerShell, por exemplo:
+```
+(.venv) PS C:\Projetos\python-microservice>
+```
+
+Se não estiver ativado, execute:
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+#### Passo 2: Iniciar o servidor FastAPI
+
+**Opção A - Via Uvicorn (recomendado para desenvolvimento):**
 ```powershell
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-**Opção 2 - Via script:**
+**Opção B - Via script de desenvolvimento:**
 ```bash
 bash run-dev.sh
 ```
 
-#### 🎯 Resultado Esperado
+#### Passo 3: Validar que o servidor está rodando
 
-Você verá:
+Você verá uma saída similar a:
 ```
 INFO:     Uvicorn running on http://0.0.0.0:8000
 INFO:     Application startup complete
@@ -142,27 +178,54 @@ INFO:     Application startup complete
 
 A API estará disponível em: **http://localhost:8000**
 
-### ⚡ Resumo - Comandos Sequenciais
+---
+
+## ⚡ Quick Start - Resumo de Comandos
+
+Se você já completou o setup anterior, use este resumo para iniciar rapidamente:
 
 ```powershell
 # Navegar ao projeto
 cd C:\Projetos\python-microservice
 
-# Criar ambiente virtual
-uv venv
-
-# Ativar ambiente
+# Ativar ambiente virtual
 .\.venv\Scripts\Activate.ps1
 
-# Instalar dependências
-uv sync
-
-# Iniciar infraestrutura
+# Iniciar infraestrutura (execute apenas uma vez ou quando parar containers)
 docker-compose up -d
 
-# Executar aplicação
+# Executar aplicação (com reload automático)
 python -m uvicorn app.main:app --reload
 ```
+
+## 📖 Setup Completo do Zero
+
+Se é a primeira vez, execute estes comandos na sequência:
+
+```powershell
+# 1. Navegar ao projeto
+cd C:\Projetos\python-microservice
+
+# 2. Criar ambiente virtual
+uv venv
+
+# 3. Ativar ambiente
+.\.venv\Scripts\Activate.ps1
+
+# 4. Instalar dependências
+uv sync
+
+# 5. Iniciar infraestrutura Docker
+docker-compose up -d
+
+# 6. Verificar status dos containers
+docker-compose ps
+
+# 7. Executar aplicação
+python -m uvicorn app.main:app --reload
+```
+
+Pronto! Acesse http://localhost:8000 e aproveite a API.
 
 ## 📡 API Endpoints
 
