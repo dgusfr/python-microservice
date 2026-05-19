@@ -266,6 +266,57 @@ docker-compose down
 deactivate
 ```
 
+## WireMock — Mocks de Serviços Externos
+
+Este projeto usa WireMock para simular os serviços externos (payment, inventory e order) durante desenvolvimento e testes.
+
+- **Propósito**: permitir testes e desenvolvimento offline, controlando respostas (sucesso, erro, erros 500, fundos insuficientes, etc.) sem depender dos serviços reais.
+- **Local dos arquivos**: os mappings e respostas ficam em `wiremock/` na raiz do projeto. Exemplos:
+  - [wiremock/payment/mappings/success.json](wiremock/payment/mappings/success.json)
+  - [wiremock/inventory/mappings/success.json](wiremock/inventory/mappings/success.json)
+  - [wiremock/order/mappings/success.json](wiremock/order/mappings/success.json)
+
+- **Portas padrão usadas**:
+  - Payment mock: `http://localhost:8081`
+  - Inventory mock: `http://localhost:8082`
+  - Order mock: `http://localhost:8083`
+
+- **Como iniciar os mocks**: o `docker-compose.yml` já inclui os containers de mock. Para subir apenas os mocks ou todo o ambiente, execute:
+
+```powershell
+docker-compose up -d
+```
+
+Verifique o status com:
+
+```powershell
+docker-compose ps
+docker-compose logs <service-name>
+```
+
+- **Endpoint administrativo do WireMock**: cada mock expõe a API administrativa em `http://localhost:<port>/__admin`. Por exemplo:
+
+```
+http://localhost:8081/__admin/mappings
+```
+
+- **Adicionar/alterar mappings localmente**:
+  1. Crie ou edite um arquivo JSON dentro de `wiremock/<service>/mappings/` seguindo o formato do WireMock (mapping + resposta em `__files` quando necessário).
+  2. Reinicie o container do mock para que ele recarregue os mappings montados pelo volume:
+
+```powershell
+docker-compose restart <service-name>
+```
+
+- **Testando as variações**: use os arquivos em `wiremock/*/mappings/` para simular cenários diferentes (ex.: `payment` com `insufficient_fund.json` ou `server_500.json`). O arquivo `request.http` contém exemplos que apontam para os endpoints dos mocks.
+
+- **Dica**: após mudar mappings com frequência, pode ser útil limpar o container e subir novamente:
+
+```powershell
+docker-compose down
+docker-compose up -d
+```
+
 ## 📦 Dependências
 
 | Pacote | Versão | Propósito |
