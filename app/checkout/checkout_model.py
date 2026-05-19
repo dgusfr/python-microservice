@@ -18,15 +18,14 @@ class CheckoutStatus(Enum):
 
 
 class Checkout(Base):
+    """Model representing a checkout process."""
+
     __tablename__ = "checkouts"
 
-    id: int = Column(Integer, primary_key=True, autoincrement=True)
-    customer_email: str = Column(String(128), nullable=False)
-    created_at: datetime = Column(
-        DateTime(timezone=True), default=datetime.now(timezone.utc), nullable=False
-    )
-    payment_id: str | None = Column(String(64), nullable=True)
-    order_id: str | None = Column(String(64), nullable=True)
-    status: str = Column(String(24), default=CheckoutStatus.PENDING.value, nullable=False)
-    error: str | None = Column(String, nullable=True)
-    total_amount: float = Column(Float, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    customer_email = Column(String(128), nullable=False)
+    order_id = Column(String(64), nullable=True)
+    payment_id = Column(String(64), nullable=True)
+    total_amount = Column(Float, nullable=False)
+    status = Column(String, nullable=False, default=CheckoutStatus.PENDING.value)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
