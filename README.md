@@ -2,6 +2,36 @@
 
 Microserviço de processamento de checkout para plataforma de e-commerce, desenvolvido com FastAPI, PostgreSQL e integração com múltiplos serviços externos.
 
+---
+
+## 📑 Sumário
+
+- [📋 Visão Geral](#-visão-geral)
+- [🏗️ Arquitetura](#️-arquitetura)
+  - [Stack Tecnológico](#stack-tecnológico)
+  - [Estrutura de Pastas](#estrutura-de-pastas)
+- [🚀 Executando Localmente](#-executando-localmente)
+  - [Pré-requisitos](#pré-requisitos)
+  - [1️⃣ Configuração do UV](#1️⃣-configuração-do-uv)
+  - [2️⃣ Configuração do Docker](#2️⃣-configuração-do-docker)
+  - [3️⃣ Subindo o Servidor](#3️⃣-subindo-o-servidor)
+  - [⚡ Quick Start](#-quick-start---resumo-de-comandos)
+  - [📖 Setup Completo do Zero](#-setup-completo-do-zero)
+- [📡 API Endpoints](#-api-endpoints)
+- [🔧 Variáveis de Ambiente](#-variáveis-de-ambiente)
+- [🗄️ Database](#️-database)
+- [🧪 Testando a Aplicação](#-testando-a-aplicação)
+- [🛑 Parar a Aplicação](#-parar-a-aplicação)
+- [WireMock — Mocks de Serviços Externos](#wiremock--mocks-de-serviços-externos)
+- [📦 Dependências](#-dependências)
+- [🔒 Boas Práticas Implementadas](#-boas-práticas-implementadas)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📚 Referências](#-referências)
+- [📄 Licença](#-licença)
+- [👤 Autor](#-autor)
+
+---
+
 ## 📋 Visão Geral
 
 Este projeto implementa um serviço robusto de checkout que gerencia:
