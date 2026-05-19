@@ -42,6 +42,20 @@ Este projeto implementa um serviço robusto de checkout que gerencia:
 - **Persistência de Dados**: Armazenamento seguro em PostgreSQL
 - **Comunicação Assíncrona**: Requisições não-bloqueantes entre serviços
 
+**OBS — IDs em microsserviços assíncronos**
+
+O checkout precisa de um ID porque ele funciona como um identificador único para aquela transação específica. Pense assim: quando um cliente faz uma compra, várias coisas acontecem em diferentes serviços (pagamento, inventário, pedido). O ID do checkout é como um "número de rastreamento" que conecta todas essas operações.
+
+Na aula, são mencionados três IDs importantes que o checkout precisa guardar:
+
+- **ID do carrinho de compras**: identifica de qual carrinho vieram os itens.
+- **ID do checkout**: identifica aquela transação específica de forma única.
+- **ID da permissão de pagamento**: vem do serviço de pagamento e prova que o pagamento foi aprovado.
+
+Por que isso é tão importante? Porque em microsserviços, as informações não chegam todas ao mesmo tempo. Imagine que o pagamento foi aprovado, mas o inventário ainda não foi atualizado. Se não tivéssemos esses IDs salvos no checkout, seria impossível rastrear o que aconteceu com aquela compra específica.
+
+Quando um administrador ou o próprio cliente quer saber o status de uma compra, ele consulta o checkout usando esse ID. Ali estão registrados todos os IDs relacionados àquela transação, permitindo identificar em qual etapa algo pode ter falhado.
+
 ## 🏗️ Arquitetura
 
 ### Stack Tecnológico
