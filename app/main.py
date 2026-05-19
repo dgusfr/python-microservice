@@ -1,10 +1,9 @@
-import os
-
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 
 from app.checkout.router import router as checkout_router
 from app.client_manager import client_manager
+from app.config import APP_HOST, APP_PORT, PAYMENT_SERVICE_URL
 from app.infra.database import create_tables
 
 
@@ -25,13 +24,10 @@ app.include_router(checkout_router)
 
 @app.get("/health")
 async def health_check():
-    payment_url = os.getenv("PAYMENT_SERVICE_URL")
-    return {"status": payment_url}
+    return {"status": PAYMENT_SERVICE_URL}
 
 
 if __name__ == "__main__":
     import uvicorn
 
-    host = os.getenv("APP_HOST", "0.0.0.0")
-    port = int(os.getenv("APP_PORT", 8005))
-    uvicorn.run(app, host=host, port=port)
+    uvicorn.run(app, host=APP_HOST, port=APP_PORT)

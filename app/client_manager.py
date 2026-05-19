@@ -1,7 +1,8 @@
-import os
 from typing import Optional
 
 import httpx
+
+from app.config import INVENTORY_SERVICE_URL, ORDER_SERVICE_URL, PAYMENT_SERVICE_URL
 
 
 class ClientManager:
@@ -11,17 +12,9 @@ class ClientManager:
         self._order_client: Optional[httpx.AsyncClient] = None
 
     async def startup(self):
-        payment_service_url = os.getenv("PAYMENT_SERVICE_URL")
-        inventory_service_url = os.getenv("INVENTORY_SERVICE_URL")
-        order_service_url = os.getenv("ORDER_SERVICE_URL")
-
-        self._payment_client = httpx.AsyncClient(
-            base_url=payment_service_url, timeout=10.0
-        )
-        self._inventory_client = httpx.AsyncClient(
-            base_url=inventory_service_url, timeout=30.0
-        )
-        self._order_client = httpx.AsyncClient(base_url=order_service_url, timeout=15.0)
+        self._payment_client = httpx.AsyncClient(base_url=PAYMENT_SERVICE_URL, timeout=10.0)
+        self._inventory_client = httpx.AsyncClient(base_url=INVENTORY_SERVICE_URL, timeout=30.0)
+        self._order_client = httpx.AsyncClient(base_url=ORDER_SERVICE_URL, timeout=15.0)
 
     async def shutdown(self):
         if self._payment_client:
