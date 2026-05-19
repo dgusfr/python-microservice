@@ -1,0 +1,98 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+wheelhouse/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+nosetests.xml
+junit*.xml
+test-results/
+
+# PyPI / packaging
+*.egg
+
+# Editor / IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and runtime files
+*.log
+logs/
+*.log.*
+tmp/
+temp/
+run/
+
+# SQLite and local DBs
+*.sqlite3
+*.db
+*.db-journal
+
+# Environment and secrets
+.env
+.env.*
+.envrc
+secrets/
+credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Docker
+docker-compose.override.yml
+docker-compose.*.yml
+
+# Compiled extensions
+*.so
+*.dylib
+*.dll
+*.pyd
+
+# C extensions and build cache
+eggs/
+pip-wheel-metadata/
+
+# Coverage / reports
+coverage/
+htmlcov/
+
+# Misc
+.python-version
+*.swp
