@@ -12,13 +12,13 @@ class OrderClient:
 
     async def create(
         self,
-        checkout_id: str,
+        checkout_id: int | str,
         customer_email: str,
         shipping_address: ShippingAddressRequest,
         items: list[ItemRequest],
     ):
         payload = {
-            "checkout_id": checkout_id,
+            "checkout_id": str(checkout_id),
             "customer_email": customer_email,
             "shipping_address": {
                 "street": shipping_address.street,
