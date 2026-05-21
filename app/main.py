@@ -13,7 +13,9 @@ async def lifespan(app: FastAPI):
     # Startup: Create database tables
     await create_tables()
     await client_manager.startup()
+    # yield is where the application runs
     yield
+    # close conections on shutdown
     await client_manager.shutdown()
 
 
