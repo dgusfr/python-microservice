@@ -331,6 +331,12 @@ Veja o arquivo `request.http` para mais exemplos que podem ser executados no VS 
 
 ## 🔧 Variáveis de Ambiente
 
+Crie o arquivo `.env` a partir do exemplo e ajuste os valores conforme seu ambiente:
+
+```powershell
+Copy-Item .env.example .env
+```
+
 Crie um arquivo `.env` na raiz do projeto:
 
 ```env
