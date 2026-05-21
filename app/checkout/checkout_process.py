@@ -62,6 +62,8 @@ async def checkout_process(
                 "message": inventory_response["error"],
             },
         )
+        db.rollback()
+        return {"checkout_id": checkout.id, "error": inventory_response["error"]}
 
     order_response = await order_client.create(
         checkout_id=checkout.id,
