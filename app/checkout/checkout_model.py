@@ -31,4 +31,7 @@ class Checkout(Base):
     status: Mapped[str] = mapped_column(
         String, nullable=False, default=CheckoutStatus.PENDING.value
     )
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+    )
